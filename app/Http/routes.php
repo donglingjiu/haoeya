@@ -23,11 +23,11 @@ Route::group(['prefix'=>'shop','namespace'=>'shop'],function(){
 	Route::post('dologin','LoginController@dologin');
 	Route::post('shouye','LoginController@index');
 	// Route::get('/index','IndexController@index');
-	// Route::resource('/foods','FoodsController');
+	Route::resource('/foods','FoodsController');
 	// Route::resource('/com','CommentController');
 	// Route::resource('/order','OrderlistController');
 	// Route::resource('/shop','ShopController');
-
+});
 //系统后台路由
 Route::group(['prefix'=>'sys','namespace'=>'sys'],function(){
 
@@ -64,5 +64,4 @@ Route::group(['prefix'=>'sys','namespace'=>'sys'],function(){
 	//系统广告管理路由
 	Route::resource('ad','AdController');
 	
-
 });
