@@ -6,13 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-<<<<<<< HEAD
+
 use App\Model\user_log;
 use App\Model\user_info;
-
-=======
+use App\Http\Requests\UserInfoRequest;
 use DB;
->>>>>>> 4c9d7ac4502c3783d63a7e25c3269996e1b886bc
+
 class UserController extends Controller
 {
     /**
@@ -20,24 +19,22 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {   
 
-<<<<<<< HEAD
-        $res = user_log::get();
+
+        $res = user_log::paginate(2);
+
+        // $date = DB::table('user_logs')->paginate(2);
+        // dump($date);
+        // $res = $date ->paginate(2);
+        
+        // dump($res);
+        //dump($date);
         //加载用户管理视图
         return view('system.user.design',['res'=>$res]);
 
-=======
 
-        $res = DB::table('user_logs')
-        ->join('user_infos','user_logs.id','=','user_infos.uid')
-        ->select('user_logs.*','user_infos.auth')
-        ->get();
-        //dump($res);
-        //加载用户管理视图
-        return view('system.user.design',['res'=>$res]);
->>>>>>> 4c9d7ac4502c3783d63a7e25c3269996e1b886bc
     }
 
     /**
@@ -57,13 +54,11 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserInfoRequest $request)
     {
-<<<<<<< HEAD
-        //执行添加
-=======
-        //
->>>>>>> 4c9d7ac4502c3783d63a7e25c3269996e1b886bc
+        //执行用户添加
+        $date = $request->except(['_token','auth','photo']);
+        dump($date);
     }
 
     /**
@@ -85,14 +80,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {   
-<<<<<<< HEAD
 
-        // $res = User_log::where('id','=',$id)->first();
-        // dump($res);
-=======
->>>>>>> 4c9d7ac4502c3783d63a7e25c3269996e1b886bc
+        $data = DB::table('user_logs')->where('id',$id)->first();
+
+        dump($data);
         //加载用户修改视图
-        return view('/system.user.edit');
+        return view('system.user.edit',['data'=>$data]);
     }
 
     /**
@@ -104,11 +97,18 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-<<<<<<< HEAD
-        echo 123;
-=======
->>>>>>> 4c9d7ac4502c3783d63a7e25c3269996e1b886bc
+        
+        dump($request->$id);
+        $data = $request->except(['_token','_method','photo','auth']); 
+
+        dump($data);
+        // $res = DB::table('user_logs')->where('id',$id)->update($data);
+        // if($res){
+        //     echo '<script>alert("修改成功");location.href="/sys/user"</script>';
+        // }else{
+        //     echo '<script>alert("修改失败");location.href="'.$_SERVER['HTTP_REFERER'].'"</script>';
+        // }
+
     }
 
     /**
@@ -119,10 +119,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
-<<<<<<< HEAD
-        dump($id);
-=======
->>>>>>> 4c9d7ac4502c3783d63a7e25c3269996e1b886bc
+        $res = DB::table('user_logs')->where('id',$id)->delete();
+        if($res){
+            echo '<script>alert("删除成功");location.href="'.$_SERVER['HTTP_REFERER'].'"</script>';
+        }else{
+            echo '<script>alert("删除失败");location.href="'.$_SERVER['HTTP_REFERER'].'"</script>';
+        }
     }
 }
