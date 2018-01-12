@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\shop;
+namespace App\Http\Controllers\sys;
 
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Model\shop;
-use App\model\food;
 
-class ShopController extends Controller
+class OrderController extends Controller
 {
-    //显示店铺信息
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
-    {   
-        shop::
-        $data = shop::where('uid',1)->first();
-        return view('shop/shop/system',['data'=>$data]);
+    {
+        //加载订单管理的视图
+        return view('system.order.design');
     }
 
     /**
@@ -36,22 +37,8 @@ class ShopController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {       
-            //1.获取文件
-            $pic = $request -> file('logo');
-             //2.获取文件后缀名
-            $hz = $pic->getClientOriginalExtension();
-            //3.随机文件名字
-            $temp_name = md5(time()+rand(10000,99999));
-            // //4.拼接
-            $filename = $temp_name.'.'.$hz;
-            // $disk = \Storage::disk('qiniu');
-            // $disk->put('shop/shop/'.$filename,$contents);
-            $pic->move('./upload/shop/shop',$filename);
-            return $filename;
-            // dd($request->all());
-
-
+    {
+        //
     }
 
     /**
